@@ -12,14 +12,16 @@ fun main() {
 	val name = "Kotlin"
 	println("My name is $name")
 
-	strings(121)
-	classFun()
+//	strings(121)
+//	classFun()
+//
+//	println("Red color: " + Color.RED)
+//
+//	//primes(100)
+//
+//	println(primes(1000))
 
-	println("Red color: " + Color.RED)
-
-	//primes(100)
-
-	println(primes(1000))
+	cycles()
 }
 
 fun max(a: Int, b: Int): Int {
@@ -181,9 +183,26 @@ fun eval(e: Expr) : Int {
 		return n.value
 	}
 	else if(e is Sum) {
-		return eval(e.right) + eval(e.left)
+		return eval(e.right) + eval(e.left)                 // smart cast here, after we checked the type before
 	}
 	throw IllegalArgumentException("Unknown expression!")
 }
 
+fun cycles() {
+	var count = 0
+
+	// while works the same as in Java
+	while(count < 10) {
+		println("Count: $count")
+		count++
+	}
+
+	// do-while is the same as well
+	do {
+		println("Hi :-)")
+		count--
+	} while(count != 5)
+
+
+}
 

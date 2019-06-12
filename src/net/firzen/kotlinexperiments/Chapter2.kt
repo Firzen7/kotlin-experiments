@@ -21,7 +21,11 @@ fun main() {
 //
 //	println(primes(1000))
 
-	cycles()
+	cycles2()
+
+	indentifyChar('M')
+	indentifyChar('2')
+	indentifyChar('*')
 }
 
 fun max(a: Int, b: Int): Int {
@@ -68,7 +72,7 @@ fun test() {
 
 	var number = 57
 	// number = "sixty one"     // this won't compile - we can omit type when declaring variable, but it must remain
-								// the same
+	// the same
 }
 
 fun strings(num: Int) {
@@ -102,15 +106,15 @@ fun classFun() {
 	println("Ok, so ${person.name} is a student")   // that's better :-)
 }
 
-class Rectangle(val height : Int, val width : Int) {
-	val isSquare : Boolean
+class Rectangle(val height: Int, val width: Int) {
+	val isSquare: Boolean
 		get() {
 			return height == width
 		}
 
-	val isAnswer : Boolean = (height == width)
+	val isAnswer: Boolean = (height == width)
 
-	fun randomRect() : Rectangle {
+	fun randomRect(): Rectangle {
 		val random = Random()
 
 		// no new operator in Kotlin
@@ -118,8 +122,8 @@ class Rectangle(val height : Int, val width : Int) {
 	}
 }
 
-enum class Color(val red : Int, val green : Int, val blue : Int) {
-	RED(255,0, 0),
+enum class Color(val red: Int, val green: Int, val blue: Int) {
+	RED(255, 0, 0),
 	GREEN(0, 255, 0),
 	YELLOW(255, 255, 0),
 	ORANGE(255, 128, 0),
@@ -139,9 +143,9 @@ fun getColorString(color: Color) = when (color) {
 	else -> "Not recognized"
 }
 
-fun getWarmth(color : Color) : String {
+fun getWarmth(color: Color): String {
 	// works with return, not the best approach though, Kotlin is being functional here
-	when(color) {
+	when (color) {
 		Color.RED, Color.ORANGE, Color.YELLOW -> return "warm"
 		Color.GREEN, Color.BLUE -> return "cold"
 		Color.WHITE -> return "white"
@@ -150,7 +154,7 @@ fun getWarmth(color : Color) : String {
 }
 
 // possible to use when with complex objects as well
-fun recognizeNumber(number : String) = when(number) {
+fun recognizeNumber(number: String) = when (number) {
 	"one" -> 1
 	"two" -> 2
 	"three" -> 3
@@ -159,7 +163,7 @@ fun recognizeNumber(number : String) = when(number) {
 }
 
 // using when without argument, can help with optimization
-fun mixColor(c1 : Color, c2 : Color) = when {
+fun mixColor(c1: Color, c2: Color) = when {
 	(c1 == Color.RED && c2 == Color.YELLOW)
 			|| (c2 == Color.RED && c1 == Color.YELLOW) -> Color.ORANGE
 	(c1 == Color.BLUE && c2 == Color.YELLOW)
@@ -175,14 +179,14 @@ fun mixColor(c1 : Color, c2 : Color) = when {
 interface Expr
 //class Num(value: Int) : Expr                                // without "val value", the field value would be private
 class Num(val value: Int) : Expr
+
 class Sum(val left: Expr, val right: Expr) : Expr
 
-fun eval(e: Expr) : Int {
-	if(e is Num) {
+fun eval(e: Expr): Int {
+	if (e is Num) {
 		val n = e as Num
 		return n.value
-	}
-	else if(e is Sum) {
+	} else if (e is Sum) {
 		return eval(e.right) + eval(e.left)                 // smart cast here, after we checked the type before
 	}
 	throw IllegalArgumentException("Unknown expression!")
@@ -192,7 +196,7 @@ fun cycles() {
 	var count = 0
 
 	// while works the same as in Java
-	while(count < 10) {
+	while (count < 10) {
 		println("Count: $count")
 		count++
 	}
@@ -201,8 +205,53 @@ fun cycles() {
 	do {
 		println("Hi :-)")
 		count--
-	} while(count != 5)
+	} while (count != 5)
 
+	// note that ranges in Kotlin are closed (inclusive)
+	// 1..-5 would be perfectly valid - it would be an empty range, and for's body wouldn't execute
+	for (i in 1..5) {
+		println("Index: $i")
+	}
 
+	// again, 5 downTo 54 would be valid, but of course, body would not execute
+	for (i in 5 downTo -5) {
+		println("test")
+	}
+
+	// until function can be used to create half-closed range
+	// this is the exact equivalent of for(int i = 0; i < 5; i++) {System.out.println("Step " + i);} in Java:
+	for (i in 0 until 5) {
+		println("Step $i")
+	}
 }
+
+fun cycles2() {
+	val binaryReps = TreeMap<Char, String>()
+
+	for (c in 'A'..'F') {
+		val binary = Integer.toBinaryString(c.toInt())
+		binaryReps[c] = binary          // easy access by indexing operator
+//		binaryReps.set(c, binary)       // this would work the same as line above
+	}
+
+	for ((letter, binary) in binaryReps) {
+		println("$letter -> $binary")
+	}
+
+	// THIS IS PURE GOLD!
+	val cars = arrayListOf("Nissan", "Tesla", "Mitsubishi", "BMW")
+	for ((index, car) in cars.withIndex()) {
+		println("$index  $car")
+	}
+}
+
+// note that checking ranges with letters isn't adding complexity; c in 'a'..'z' is implemented as: 'a' <= c && c <= 'z'
+fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+fun isNotDigit(c: Char) = c !in '0'..'9'
+
+fun indentifyChar(c: Char) {
+	if (isLetter(c)) println("$c is letter!")
+	if (isNotDigit(c)) println("$c is not digit!")
+}
+
 

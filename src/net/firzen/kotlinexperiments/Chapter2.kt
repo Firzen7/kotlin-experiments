@@ -1,6 +1,9 @@
 package net.firzen.kotlinexperiments
 
+import java.io.BufferedReader
+import java.io.StringReader
 import java.lang.IllegalArgumentException
+import java.lang.NumberFormatException
 import java.util.*
 
 // Functions -----------------------------------------------------------------------------------------------------------
@@ -9,8 +12,8 @@ import java.util.*
 // println("test")
 
 fun main() {
-	val name = "Kotlin"
-	println("My name is $name")
+//	val name = "Kotlin"
+//	println("My name is $name")
 
 //	strings(121)
 //	classFun()
@@ -21,16 +24,19 @@ fun main() {
 //
 //	println(primes(1000))
 
-	cycles2()
+//	cycles2()
+//
+//	indentifyChar('M')
+//	indentifyChar('2')
+//	indentifyChar('*')
 
-	indentifyChar('M')
-	indentifyChar('2')
-	indentifyChar('*')
+	readNumber(BufferedReader(StringReader("654")))
+	readNumber(BufferedReader(StringReader("54+78")))
 }
 
 fun max(a: Int, b: Int): Int {
 //    a = 5  // not permitted - variables are immutable by default (val)
-	return if (a > b) a else b;
+	return if (a > b) a else b
 }
 
 // This is not valid - return type must be specified
@@ -192,6 +198,8 @@ fun eval(e: Expr): Int {
 	throw IllegalArgumentException("Unknown expression!")
 }
 
+// Cycles --------------------------------------------------------------------------------------------------------------
+
 fun cycles() {
 	var count = 0
 
@@ -252,6 +260,20 @@ fun isNotDigit(c: Char) = c !in '0'..'9'
 fun indentifyChar(c: Char) {
 	if (isLetter(c)) println("$c is letter!")
 	if (isNotDigit(c)) println("$c is not digit!")
+}
+
+// Exceptions ----------------------------------------------------------------------------------------------------------
+// they work the same as in Java, but better :D
+
+fun readNumber(reader: BufferedReader) {
+	// exceptions can be used as expressions in Kotlin
+	val number = try {
+		Integer.parseInt(reader.readLine())
+	} catch(e: NumberFormatException) {
+		"NaN"
+	}
+
+	println(number)
 }
 
 

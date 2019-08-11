@@ -255,6 +255,7 @@ fun cycles2() {
 
 // note that checking ranges with letters isn't adding complexity; c in 'a'..'z' is implemented as: 'a' <= c && c <= 'z'
 fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+
 fun isNotDigit(c: Char) = c !in '0'..'9'
 
 fun indentifyChar(c: Char) {
@@ -269,7 +270,7 @@ fun readNumber(reader: BufferedReader) {
 	// exceptions can be used as expressions in Kotlin
 	val number = try {
 		Integer.parseInt(reader.readLine())
-	} catch(e: NumberFormatException) {
+	} catch (e: NumberFormatException) {
 		"NaN"
 	}
 

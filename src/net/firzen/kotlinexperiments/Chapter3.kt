@@ -41,6 +41,10 @@ fun main() {
 
 	val myPair = 5 pair 7
 	println(myPair)
+
+	splitString()
+	tripleQuoteStrings()
+	localFunctions()
 }
 
 // this function has parameters with default values
@@ -59,4 +63,58 @@ fun squares(vararg values : Int) : List<Int> = values.map { it.toDouble().pow(2)
 
 // custom infix function
 infix fun Any.pair(other: Any) = Pair(this, other)
+
+fun splitString() {
+	val name = "Harry.+*-MM.+Potter"
+
+	// Kotlin's default split function does not take regular expression as an argument
+	val initials = name.split(".+*-MM.+")
+
+	val firstName = initials[0]
+	val secondName = initials[1]
+
+	println("Name of the chosen one was $firstName $secondName.")
+
+	val cipher = "soxZmyyyAsxxaahmzbelowx+ssooosweeRabove"
+
+	val secret = cipher.split(Regex("(x.*y)|(x.*mz)|(x.*R)"))
+
+	println(secret)
+	println("Remember: ${secret[1]} ${secret[3]} ${secret[0]} ${secret[2]}.")
+}
+
+fun tripleQuoteStrings() {
+	// triple quote strings can be useful for regular expressions
+	val unescaped = """This \string\ is un\es\ca\ped!"""
+	println(unescaped)
+
+	// also they can be used to write down strings with linebrakes comfortably,
+	// could be nice for testing purposes :-)
+	val xml = """<xml>
+                    <name>Alfonso</name>
+                    <age>15</age>
+|				 </xml>""".trimMargin()
+
+	// hmm, doesn't seem to be as reliable
+	println(xml)
+}
+
+// Kotlin supports local functions, yay!!
+fun localFunctions() {
+	fun yes() {
+		print("Yes!")
+	}
+
+	fun it() : String = " It"
+
+	fun can() : String{
+		fun beDone() = "be done!"
+		return " can ${beDone()}"
+	}
+
+	yes()
+	print(it())
+	println(can())
+}
+
 

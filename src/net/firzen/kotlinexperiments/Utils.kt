@@ -5,7 +5,7 @@ import kotlin.math.sqrt
 // in this file, there are top level utility functions
 
 fun isPrime(number: Int) =
-	number > 2 && (2 until sqrt(number.toDouble()).toInt()).all { a -> number % a != 0 }
+	number > 1 && (2..sqrt(number.toDouble()).toInt()).all { a -> number % a != 0 }
 
 fun primes(start: Int = 2, end: Int) = ((if (start > 2) start else 2)..end).filter { a -> isPrime(a) }
 

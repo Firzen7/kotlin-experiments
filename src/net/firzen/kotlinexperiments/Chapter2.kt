@@ -102,7 +102,7 @@ private class TestClass2()          // private test class
 
 // class Person(val name)           // types of member fields must be defined
 
-class Person(val name: String)      // one-line declaration of class
+private class Person(val name: String)      // one-line declaration of class
 
 fun classFun() {
 //	val person = Person()   // will fail, as we didn't define the name of Person
